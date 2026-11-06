@@ -1,102 +1,191 @@
 # Computer Vision – Object Detection and Contour Extraction
 
-## About the Project
+## Candidate
 
-This project was developed as part of a technical challenge involving computer vision and image processing.
+**Name:** Luiza Teixeira Barcellos Rosauro de Almeida
 
-The main goal is to detect objects in an image, identify their categories, extract their contours, and calculate geometric information about each detected object.
+## Project Overview
 
-## Technologies Used
+This project was developed as part of a technical selection process involving Python, computer vision, and image processing.
 
-- Python
-- YOLO11 (Ultralytics)
-- OpenCV
-- Pandas
-- NumPy
+The goal of Challenge 1 was to detect multiple objects in an image, identify their categories, extract their contours, calculate geometric information, and generate an annotated image and a CSV file containing the results.
 
-## Features
+## Challenge Status
 
-- Image loading and preprocessing
-- Object detection using YOLO11
-- Object segmentation and contour extraction using OpenCV
-- Automatic object categorization
-- Calculation of contour area and object center coordinates
-- Generation of an annotated image
-- Export of object information to a CSV file
+| Challenge | Description | Status |
+|---|---|---|
+| Challenge 1 | Object Detection and Contour Extraction | Completed |
+| Challenge 2 | Data Diagnosis and Cleaning | Not started |
+| Challenge 3 | Regression and Evaluation | Not started |
 
-## Processing Strategy
+*Statuses will be updated as the project progresses.*
 
-The solution uses a pre-trained YOLO11s-seg model from Ultralytics to detect and segment everyday objects.
+## Technologies and Libraries
 
-The processing pipeline consists of the following steps:
-
-1. **Image loading:** The original image is loaded using OpenCV, and its width, height, and number of color channels are displayed.
-2. **Object detection and segmentation:** YOLO11s-seg identifies objects and generates a segmentation mask for each detection.
-3. **Mask preprocessing:** Each mask is converted into a NumPy array and resized to match the original image dimensions.
-4. **Binarization:** A threshold of 0.5 is applied to transform each segmentation mask into a binary image.
-5. **Contour extraction:** OpenCV's `findContours()` function extracts the external contours using `RETR_EXTERNAL` and `CHAIN_APPROX_SIMPLE`.
-6. **Noise filtering:** Contours with an area smaller than 100 pixels² are discarded.
-7. **Geometric calculations:** The contour area and centroid coordinates are calculated using OpenCV.
-8. **Annotation and export:** The contours and category names are drawn on a copy of the original image. The results are exported as an image and a CSV file.
-
-## Model and Dependencies
-
-The project uses the pre-trained `yolo11s-seg.pt` model provided by Ultralytics. The model weights are automatically downloaded when the script is executed for the first time, if they are not already available.
-
-No model training is performed.
-
-The model was obtained from Ultralytics, which provides pre-trained YOLO models for object detection and instance segmentation.
+- **Python 3.13**
+- **Ultralytics YOLO11** – Pre-trained object segmentation model.
+- **OpenCV** – Image processing and contour extraction.
+- **NumPy** – Numerical operations and image mask processing.
+- **Pandas** – Data organization and CSV generation.
+- **Matplotlib** – Installed as a project dependency.
 
 ## Project Structure
 
 ```text
-desafio_1/
-├── imagens/
-│   └── imagem_original.png
-├── resultados/
-│   ├── imagem_contornos.png
-│   └── objetos_identificados.csv
-├── desafio_1.py
-└── README.md
+computer-vision-object-detection/
+│
+├── DESAFIO_1/
+│   ├── imagens/
+│   │   └── imagem_original.png
+│   │
+│   ├── resultados/
+│   │   ├── imagem_contornos.png
+│   │   └── objetos_identificados.csv
+│   │
+│   └── desafio_1.py
+│
+├── README.md
+├── requirements.txt
+└── .gitignore
 ```
 
-## How to Run
+## Installation
 
-1. Install the required dependencies:
+Make sure Python 3.13 and Git are installed.
+
+Clone the repository:
 
 ```bash
+git clone https://github.com/LuizaAlmeida-2002/computer-vision-object-detection.git
+```
+
+Navigate to the project directory:
+
+```bash
+cd computer-vision-object-detection
+```
+
+Create a virtual environment:
+
+```bash
+py -3.13 -m venv .venv
+```
+
+Activate the virtual environment (Windows PowerShell):
+
+```powershell
+.\.venv\Scripts\Activate.ps1
+```
+
+Install the dependencies:
+
+```bash
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-2. Run the Python script from the project root directory:
+## Execution
+
+Run the following command from the project root directory:
 
 ```powershell
-python .\desafio_1\desafio_1.py
+python .\DESAFIO_1\desafio_1.py
 ```
 
-## Results
+The YOLO11 segmentation model weights (`yolo11s-seg.pt`) are downloaded automatically by Ultralytics when needed. An internet connection may be required on the first execution.
+
+## Challenge 1 – Methodology
+
+### 1. Image Loading
+
+The original image is loaded using OpenCV.
+
+The program displays the image dimensions, including width, height, and number of color channels.
+
+### 2. Object Detection and Segmentation
+
+A pre-trained YOLO11 segmentation model is used to detect and classify objects in the image.
+
+The model generates segmentation masks for the detected objects.
+
+The selected model is `yolo11s-seg.pt`, provided by Ultralytics.
+
+### 3. Contour Extraction
+
+The segmentation masks are converted into binary images and resized to match the original image dimensions.
+
+OpenCV's `findContours()` function is then used to extract the external contours.
+
+Contours with an area smaller than 100 pixels² are discarded.
+
+For each detected object, the largest contour is selected.
+
+### 4. Geometric Information
+
+The contour area is calculated using `cv2.contourArea()`.
+
+The centroid coordinates are obtained using image moments through `cv2.moments()`.
+
+### 5. Annotation and Results
+
+The detected contours are drawn over a copy of the original image.
+
+The corresponding object categories are displayed near their contours.
 
 The program generates:
 
-- An annotated image showing the detected object contours.
-- A CSV file containing each object's ID, category, contour area, and center coordinates.
+- An annotated image (`imagem_contornos.png`).
+- A CSV file (`objetos_identificados.csv`) containing:
+  - Object ID
+  - Object category
+  - Contour area in pixels²
+  - Centroid X coordinate
+  - Centroid Y coordinate
 
-The following five object categories were identified in the test image:
+## Results
 
-- Cup
-- Bottle
-- Book
-- Mouse
-- Cell phone
+The model identified five relevant objects:
 
-The generated files are saved in the `desafio_1/resultados/` directory.
+| Object | Detected Category |
+|---|---|
+| 1 | Cup |
+| 2 | Bottle |
+| 3 | Book |
+| 4 | Mouse |
+| 5 | Cell phone |
 
-## Limitations
+Two additional detections classified as `dining table` were excluded from the final results.
 
-The solution depends on the predictions generated by the pre-trained YOLO11s-seg model. Its performance may vary depending on image quality, lighting conditions, object overlap, shadows, complex backgrounds, and object rotation.
+The original image has a resolution of 417 × 667 pixels.
 
-Some segmentation masks may not perfectly follow the boundaries of objects, resulting in contour inaccuracies.
+## Limitations and Technical Considerations
 
-The model can also fail to recognize objects that are not included in its training categories or classify similar objects incorrectly.
+- Object detection depends on the categories recognized by the pre-trained model.
+- Overlapping objects may affect segmentation accuracy.
+- Shadows, reflections, and complex backgrounds can interfere with object detection.
+- Small objects may produce incomplete or inaccurate contours.
+- The model may incorrectly classify objects with unusual shapes or appearances.
+- The minimum contour area threshold may exclude very small objects.
 
-Additionally, the minimum contour area threshold of 100 pixels² may discard small objects or noise.
+No model training from scratch was performed. A pre-trained segmentation model was used.
+
+## Data and Model Sources
+
+- **Image:** Original image selected and provided for this challenge.
+- **Segmentation model:** Ultralytics YOLO11 (`yolo11s-seg.pt`).
+- **Documentation:** [Ultralytics Documentation](https://docs.ultralytics.com/)
+
+## Artificial Intelligence Tools
+
+AI tools were used as learning and development support, including assistance with understanding programming concepts, debugging, and organizing project documentation.
+
+The implementation and execution of the code were performed in Python.
+
+## Development Time and Next Steps
+
+**Estimated development time:** Approximately 5 hours.
+
+**Next steps:**
+- Complete the remaining technical challenges.
+- Improve project documentation.
+- Review the final results and reproducibility of the solution.
