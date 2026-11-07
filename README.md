@@ -77,8 +77,8 @@ All dependencies are listed in `requirements.txt`.
 ### 1. Clone the repository
 
 ```bash
-git clone <repository-url>
-cd TESTE_TECNICO_IA
+git clone https://github.com/LuizaAlmeida-2002/artificial-intelligence-technical-assessment.git
+cd artificial-intelligence-technical-assessment
 ```
 
 ### 2. Install dependencies
@@ -86,6 +86,8 @@ cd TESTE_TECNICO_IA
 ```bash
 python -m pip install -r requirements.txt
 ```
+
+---
 
 ## Challenge 1 – Computer Vision: Object Detection and Contour Extraction
 
@@ -126,6 +128,8 @@ python DESAFIO_1/desafio_1.py
 
 The model weights file `yolo11s-seg.pt` is located in the repository root directory.
 
+---
+
 ## Challenge 2 – Data Analysis and Cleaning: Real Estate Dataset
 
 ### Objective
@@ -138,8 +142,8 @@ The dataset is a didactic adaptation of historical Ames Housing data, related to
 
 The original dataset contained:
 
-- 2,990 records
-- 14 columns
+- **2,990 records**
+- **14 columns**
 
 ### Data Diagnosis and Cleaning
 
@@ -166,8 +170,8 @@ Outliers identified through the IQR method were analyzed but not automatically r
 
 After the cleaning process, the dataset contained:
 
-- 2,965 records
-- 14 columns
+- **2,965 records**
+- **14 columns**
 
 The cleaned dataset was saved as:
 
@@ -199,6 +203,8 @@ The charts are saved in:
 python DESAFIO_2/src/desafio_2.py
 ```
 
+---
+
 ## Challenge 3 – Machine Learning: Linear Regression for Real Estate Price Prediction
 
 ### Objective
@@ -209,7 +215,7 @@ The cleaned dataset generated in Challenge 2 was used as input.
 
 ### Data Preparation
 
-Records with missing target values were excluded, resulting in 2,929 usable records.
+Records with missing target values were excluded, resulting in **2,929 usable records**.
 
 The target variable was:
 
@@ -217,9 +223,11 @@ The target variable was:
 
 The dataset was divided into three subsets:
 
-- Training: 70%
-- Validation: 15%
-- Testing: 15%
+| Dataset | Proportion | Records |
+|---|---:|---:|
+| Training | 70% | 2,048 |
+| Validation | 15% | 442 |
+| Testing | 15% | 439 |
 
 A `GroupShuffleSplit` strategy was used with `id_imovel` as the grouping variable to prevent records belonging to the same property from appearing in different subsets.
 
@@ -238,15 +246,15 @@ The following variables were excluded:
 
 A preprocessing pipeline was implemented using Scikit-learn.
 
-For numerical features:
+**For numerical features:**
 
 - Missing values were filled using the median.
-- StandardScaler was applied.
+- `StandardScaler` was applied.
 
-For categorical features:
+**For categorical features:**
 
 - Missing values were filled using the most frequent value.
-- OneHotEncoder was applied with `handle_unknown="ignore"`.
+- `OneHotEncoder` was applied with `handle_unknown="ignore"`.
 
 The preprocessing transformations were fitted only on the training data to prevent data leakage.
 
@@ -254,8 +262,8 @@ The preprocessing transformations were fitted only on the training data to preve
 
 Two models were evaluated:
 
-1. **Baseline Model:** DummyRegressor using the mean sale price from the training dataset.
-2. **Linear Regression:** LinearRegression model trained using the selected features.
+1. **Baseline Model:** `DummyRegressor` using the mean sale price from the training dataset.
+2. **Linear Regression:** `LinearRegression` model trained using the selected features.
 
 ### Evaluation Metrics
 
@@ -267,21 +275,29 @@ The models were evaluated using:
 
 ### Results
 
-The Linear Regression model achieved the following results on the test dataset:
+The models achieved the following results on the test dataset:
 
-| Metric | Linear Regression |
-|---|---:|
-| MAE | 24,279.27 |
-| RMSE | 42,793.17 |
-| R² | 0.7149 |
+| Metric | Mean Baseline | Linear Regression |
+|---|---:|---:|
+| MAE | 59,072.46 | 24,279.27 |
+| RMSE | 80,253.15 | 42,793.17 |
+| R² | -0.0028 | 0.7149 |
 
-The baseline model achieved an MAE of 59,072.46 and an R² of -0.0028 on the test dataset.
+The Linear Regression model reduced the test MAE by approximately **58.9%** compared to the baseline.
 
-The Linear Regression model reduced the test MAE by approximately 58.9% compared to the baseline.
-
-The test R² indicates that the model explains approximately 71.49% of the variance in sale prices.
+The test R² indicates that the model explains approximately **71.49% of the variance** in sale prices.
 
 Although the model performed well, the difference between training, validation, and test results suggests that its generalization performance should be considered when interpreting predictions.
+
+### Visual Results
+
+**Actual vs. Predicted Values**
+
+![Actual vs. Predicted Values](DESAFIO_3/resultados/graficos/valores_reais_vs_previstos.png)
+
+**Residual Analysis**
+
+![Residual Analysis](DESAFIO_3/resultados/graficos/residuos_teste.png)
 
 ### Generated Results
 
@@ -292,9 +308,7 @@ The following files were generated:
 - `resultados/graficos/residuos_teste.png`: residual analysis for the test dataset.
 - `resultados/previsoes/previsoes_teste.csv`: test predictions, including actual values and residuals.
 
-A detailed discussion of the results, model performance, and limitations is available in:
-
-`DESAFIO_3/analise_resultados.md`
+A detailed discussion of the results, model performance, and limitations is available in [`DESAFIO_3/analise_resultados.md`](DESAFIO_3/analise_resultados.md).
 
 ### Main Technologies
 
@@ -319,6 +333,8 @@ Then execute Challenge 3:
 ```bash
 python DESAFIO_3/src/desafio_3.py
 ```
+
+---
 
 ## Reproducibility
 
@@ -356,4 +372,3 @@ All implementation decisions, data processing steps, and result interpretations 
 | Challenge 1 | Object Detection and Contour Extraction | Completed |
 | Challenge 2 | Data Diagnosis and Cleaning | Completed |
 | Challenge 3 | Linear Regression and Model Evaluation | Completed |
-
